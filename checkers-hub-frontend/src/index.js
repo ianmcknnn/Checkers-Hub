@@ -11,10 +11,10 @@ function generateBoard() {
 			const newSquare = document.createElement('td')
 
 			if((i+j)%2 == 0){
-				newSquare.setAttribute('class', `square column-${j} black`)
+				newSquare.setAttribute('class', `square row-${i} column-${j} black`)
 			}
 			else{
-				newSquare.setAttribute('class', `square column-${j} red`)
+				newSquare.setAttribute('class', `square row-${i} column-${j} red`)
 			}
 			newRow.append(newSquare);
 		}
@@ -28,15 +28,23 @@ function placePieces(){
 	for(let i = 0; i < 3; i++){
 		for(let j = 0; j < 8; j++){
 			if((i+j) % 2 == 0){
-
+				placePiece(i, j, 'red');
+				placePiece(7-i, 7-j, 'black');
 			}
 		}
+
 	}
 }
 
-function board(i, j){
-	return document.querySelector(`tr.row-${i}`);
+function placePiece(row, column, color){
+	const piece = document.createElement('div');
+	piece.setAttribute('class', `piece ${color}`);
+	board(row, column).append(piece);
 }
-console.log(board(1,3));
+
+function board(i, j){
+	return document.querySelector(`tr.row-${i} td.column-${j}`);
+}
 
 generateBoard();
+placePieces();
