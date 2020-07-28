@@ -1,4 +1,10 @@
 const boardDiv = document.getElementById('board');
+const startButton = document.getElementById('start');
+
+function startGame() {
+	placePieces();
+
+}
 
 function generateBoard() {
 	const boardTable = document.createElement('table');
@@ -21,10 +27,12 @@ function generateBoard() {
 		boardTable.append(newRow);	
 	}
 	boardDiv.append(boardTable);
+	startButton.addEventListener('click', e => {
+		startGame();
+	})
 }
 
 function placePieces(){
-
 	for(let i = 0; i < 3; i++){
 		for(let j = 0; j < 8; j++){
 			if((i+j) % 2 == 0){
@@ -32,7 +40,6 @@ function placePieces(){
 				placePiece(7-i, 7-j, 'black');
 			}
 		}
-
 	}
 }
 
@@ -47,4 +54,3 @@ function board(i, j){
 }
 
 generateBoard();
-placePieces();

@@ -28,6 +28,12 @@
 	border-radius: 25px;
 }
 
+#startbutton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
 table {
 	margin: auto;
 }
