@@ -3,7 +3,7 @@ const startButton = document.getElementById('start');
 
 function startGame() {
 	placePieces();
-
+    startButton.setAttribute('class', 'off')
 }
 
 function generateBoard() {
@@ -28,7 +28,9 @@ function generateBoard() {
 	}
 	boardDiv.append(boardTable);
 	startButton.addEventListener('click', e => {
-		startGame();
+		if(startButton.className === 'on') {
+			startGame();
+		}
 	})
 }
 
@@ -53,4 +55,18 @@ function board(i, j){
 	return document.querySelector(`tr.row-${i} td.column-${j}`);
 }
 
+function selectPiece(){
+	boardDiv.addEventListener('click', makeMovable)
+}
+
+function makeMovable(event){
+if(e.target === 0){}
+}
+//select piece(div class piece black)
+
+
+
 generateBoard();
+selectPiece();
+const squares = Array.from(document.querySelectorAll('td'))
+console.log(squares)
