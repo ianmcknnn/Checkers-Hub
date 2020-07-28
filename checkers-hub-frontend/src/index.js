@@ -1,9 +1,14 @@
 const boardDiv = document.getElementById('board');
 const startButton = document.getElementById('start');
+const gameObject= {
+	whoseTurn: 'black',
+	selectedPiece: -1
+	
+};
 
 function startGame() {
 	placePieces();
-    startButton.setAttribute('class', 'off')
+	startButton.setAttribute('class', 'off')
 }
 
 function generateBoard() {
@@ -35,19 +40,22 @@ function generateBoard() {
 }
 
 function placePieces(){
+	let k = 0;
 	for(let i = 0; i < 3; i++){
 		for(let j = 0; j < 8; j++){
 			if((i+j) % 2 == 0){
-				placePiece(i, j, 'red');
-				placePiece(7-i, 7-j, 'black');
+				placePiece(i, j, 'red', k);
+				placePiece(7-i, 7-j, 'black', k + 1);
+				k += 2;
 			}
 		}
 	}
 }
 
-function placePiece(row, column, color){
+function placePiece(row, column, color, pieceNumber){
 	const piece = document.createElement('div');
 	piece.setAttribute('class', `piece ${color}`);
+	piece.dataset.id = pieceNumber;
 	board(row, column).append(piece);
 }
 
@@ -56,11 +64,21 @@ function board(i, j){
 }
 
 function selectPiece(){
-	boardDiv.addEventListener('click', makeMovable)
+	boardDiv.addEventListener('click', (e) => { 
+		if(e.target.classList.contains('piece')){
+			displayPossibleLocations();
+		}
+	})
+}
+
+function displayPossibleLocations(){
+	//display yellow circles on legal move spaces
 }
 
 function makeMovable(event){
-if(e.target === 0){}
+}
+
+function movePiece(){
 }
 //select piece(div class piece black)
 
@@ -69,4 +87,5 @@ if(e.target === 0){}
 generateBoard();
 selectPiece();
 const squares = Array.from(document.querySelectorAll('td'))
-console.log(squares)
+const blackSquares = Array.from(document.querySelectorAll('.square.black'))
+
