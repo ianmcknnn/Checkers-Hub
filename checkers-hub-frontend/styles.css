@@ -58,7 +58,10 @@ table {
 	margin: auto;
 }
 
-
+.inGame{
+	background-color:#23a6d5;
+	background-size: 400% 400%;
+	}
 
 .body {
     background: linear-gradient(-45deg, #e04313, #6b052c, #23a6d5, #23d5ab);

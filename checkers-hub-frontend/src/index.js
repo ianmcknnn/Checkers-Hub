@@ -1,6 +1,6 @@
 const boardDiv = document.getElementById('board');
 const startButton = document.getElementById('start');
-
+body = document.querySelector(".body")
 
 const gameObject= {
 	whoseTurn: 'black',
@@ -22,6 +22,9 @@ const gameObject= {
 function startGame() {
 	placePieces();
 	gameObject.gameInProgress = true;
+	body.classList.remove('body')
+	body.classList.add('inGame')
+
 }
 
 function generateBoard() {
