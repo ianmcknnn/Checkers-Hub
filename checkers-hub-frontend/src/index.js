@@ -1,5 +1,7 @@
 const boardDiv = document.getElementById('board');
 const startButton = document.getElementById('start');
+
+
 const gameObject= {
 	whoseTurn: 'black',
 	selectedPiece: -1
