@@ -101,10 +101,12 @@ function board(i, j) {
 function startListener() {
 	//start listening for click events on the board
 	boardDiv.addEventListener('click', (e) => {
+		//first branch: a piece is clicked of the color whose turn 
+		//it is. track this piece in gameObject and call getLegalMoves
 		if (e.target.classList.contains('piece') &&
 			e.target.classList.contains(gameObject.whoseTurn)) {
 			gameObject.selectedPiece = e.target.dataset['id'];
-			getLegalMoves(gameObject.pieceLocations[gameObject.selectedPiece]);
+			getLegalMoves(gameObject.pieceLocations[gameObject.selectedPiece], true);
 		}
 		else if (gameObject.selectedPiece &&
 				gameObject.legalMoves.find(array => equalArrays(array, getCoordinates(e.target)))) {
@@ -128,25 +130,53 @@ function displayLegalMoves(coordArray) {
 
 }
 
-function getLegalMoves(coordArray) {
+function getLegalMoves(coordArray, beforeJump) {
 	//determine which moves are legal from the selected coordinates
 	gameObject.legalMoves = [];
 	let { boardArray, legalMoves } = gameObject;
-	const squares = squaresInFront();
+	const squares = squaresInFront(coordArray);
 	for (let square of squares) {
+		debugger
 		if (boardArray[square[0]][square[1]]) {
 			if (parseInt(boardArray[square[0]][square[1]]) % 2 != parseInt(boardArray[coordArray[0]][coordArray[1]]) % 2) {
 				jumpHandler(coordArray, square);
 			}
 		}
-		else {
+		else if(beforeJump){
 			legalMoves.push(square);
 		}
 	}
+	console.log(gameObject.legalMoves);
 }
 
 function jumpHandler(coordArray, square) {
+	const next = nextInDiagonal(coordArray, square);
+	if(isEmpty(next)){
+		gameObject.legalMoves.push(next);
+		getLegalMoves(next, false);
+	}
+}
 
+function nextInDiagonal(coordArray0, square0){
+	const coordArray = [parseInt(coordArray0[0]), parseInt(coordArray0[1])];
+	const square = [parseInt(square0[0]), parseInt(square0[1])];
+
+	if(coordArray[0] < square[0]){
+		if(coordArray[1] < square[1]){
+			return([(square[0] + 1).toString(), (square[1] + 1).toString()])
+		}
+		else if(coordArray[1] > square[1]){
+			return([(square[0] + 1).toString(), (square[1] - 1).toString()])
+		}
+	}
+	else if(coordArray[0] > square[0]){
+		if(coordArray[1] < square[1]){
+			return([(square[0] - 1).toString(), (square[1] + 1).toString()])
+		}
+		else if(coordArray[1] > square[1]){
+			return([(square[0] - 1).toString(), (square[1] - 1).toString()])
+		}
+	}
 }
 
 function isEmpty(coordArray) {
@@ -182,35 +212,33 @@ function renderUpdate() {
 	}
 	gameObject.selectedPiece = null;
 	gameObject.updatedSquares = [];
-	console.log(gameObject);
 }
 
-function squaresInFront() {
-	let { whoseTurn, selectedPiece, pieceLocations } = gameObject
+function squaresInFront(coordArray) {
+	let { whoseTurn, pieceLocations } = gameObject
 
 	if (whoseTurn === 'black') {
-		if (pieceLocations[selectedPiece][1] == 0) {
-			console.log(parseInt(pieceLocations[selectedPiece][0]));
-			return [(parseInt(pieceLocations[selectedPiece][0]) - 1).toString(), (parseInt(pieceLocations[selectedPiece][1]) + 1).toString()];
+		if (coordArray[1] == 0) {
+			return [[(parseInt(coordArray[0]) - 1).toString(), (parseInt(coordArray[1]) + 1).toString()]];
 		}
-		else if (pieceLocations[selectedPiece][1] == 7) {
-			return [(parseInt(pieceLocations[selectedPiece][0]) - 1).toString(), (parseInt(pieceLocations[selectedPiece][1]) - 1).toString()];
+		else if (coordArray[1] == 7) {
+			return [[(parseInt(coordArray[0]) - 1).toString(), (parseInt(coordArray[1]) - 1).toString()]];
 		}
 		else {
-			return [[(parseInt(pieceLocations[selectedPiece][0]) - 1).toString(), (parseInt(pieceLocations[selectedPiece][1]) + 1).toString()],
-			[(parseInt(pieceLocations[selectedPiece][0]) - 1).toString(), (parseInt(pieceLocations[selectedPiece][1]) - 1).toString()]];
+			return [[(parseInt(coordArray[0]) - 1).toString(), (parseInt(coordArray[1]) + 1).toString()],
+			[(parseInt(coordArray[0]) - 1).toString(), (parseInt(coordArray[1]) - 1).toString()]];
 		}
 	}
 	else {
-		if (pieceLocations[selectedPiece][1] == 0) {
-			return [(parseInt(pieceLocations[selectedPiece][0]) + 1).toString(), (parseInt(pieceLocations[selectedPiece][1]) + 1).toString()];
+		if (coordArray[1] == 0) {
+			return [[(parseInt(coordArray[0]) + 1).toString(), (parseInt(coordArray[1]) + 1).toString()]];
 		}
-		else if (pieceLocations[selectedPiece][1] == 7) {
-			return [(parseInt(pieceLocations[selectedPiece][0]) + 1).toString(), (parseInt(pieceLocations[selectedPiece][1]) - 1).toString()];
+		else if (coordArray[1] == 7) {
+			return [[(parseInt(coordArray[0]) + 1).toString(), (parseInt(coordArray[1]) - 1).toString()]];
 		}
 		else {
-			return [[(parseInt(pieceLocations[selectedPiece][0]) + 1).toString(), (parseInt(pieceLocations[selectedPiece][1]) + 1).toString()],
-			[(parseInt(pieceLocations[selectedPiece][0]) + 1).toString(), (parseInt(pieceLocations[selectedPiece][1]) - 1).toString()]];
+			return [[(parseInt(coordArray[0]) + 1).toString(), (parseInt(coordArray[1]) + 1).toString()],
+			[(parseInt(coordArray[0]) + 1).toString(), (parseInt(coordArray[1]) - 1).toString()]];
 		}
 	}
 
