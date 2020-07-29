@@ -91,7 +91,7 @@ function placePiece(row, column, color, pieceNumber){
 	board(row, column).append(piece);
 	
 	//track new piece in gameObject
-	gameObject.boardArray[row][column] = pieceNumber;
+	gameObject.boardArray[row][column] = pieceNumber.toString();
 	gameObject.pieceLocations[pieceNumber] = [row.toString(), column.toString()];
 }
 
@@ -146,9 +146,13 @@ function movePiece(coordArray){
 
 function removePiece(coordArray){
 	board(...coordArray).childNodes[0].remove();
+	gameObject.boardArray[coordArray[0]][coordArray[1]] = null;
 }
 
 function renderUpdate(){
+	//place piece according to gameObject data
+	//remove previous instance of selected piece
+	//update gameObject to reflect changes
 	let {updatedSquares, whoseTurn, selectedPiece} = gameObject;
 	let {to, from} = updatedSquares;
 	placePiece(to[0], to[1], whoseTurn, selectedPiece);
