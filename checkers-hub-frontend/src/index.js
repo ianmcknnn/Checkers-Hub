@@ -107,7 +107,7 @@ function startListener() {
 			getLegalMoves(gameObject.pieceLocations[gameObject.selectedPiece]);
 		}
 		else if (gameObject.selectedPiece &&
-				gameObject.legalMoves.find(array => {JSON.stringify(array) == JSON.stringify(getCoordinates(e.target))})) {
+				gameObject.legalMoves.find(array => equalArrays(array, getCoordinates(e.target)))) {
 			movePiece(getCoordinates(e.target))
 			gameObject.legalMoves = [];
 		}
@@ -115,7 +115,7 @@ function startListener() {
 }
 
 function equalArrays(array1, array2){
-
+	return JSON.stringify(array1) == JSON.stringify(array2);
 }
 
 function getCoordinates(squareDiv) {
