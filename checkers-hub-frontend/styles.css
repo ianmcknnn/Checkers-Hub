@@ -4,7 +4,7 @@
   } */
 
 
-/* @import url('https://fonts.googleapis.com/css?family=Montserrat:900i&display=swap'); */
+@import url('https://fonts.googleapis.com/css?family=Montserrat:900i&display=swap');
 
 /* h1{
 	font-family: 'Montserrat', sans-serif;
@@ -81,7 +81,7 @@ table {
     }
 }
 
-/* .button {
+button {
 	min-width: 300px;
 	min-height: 60px;
 	font-family: 'Nunito', sans-serif;
@@ -155,7 +155,8 @@ table {
 	  height: 300px;
 	  opacity: 0;
 	}
-  } */
+  }
+
 h1{
   font-size: 80px;
   color: #fff;
