@@ -39,6 +39,6 @@ end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
-
+gem 'faker'
 # Bulma gem
-gem 'bulma', '~> 0.1.0'
+# gem 'bulma', '~> 0.1.0'
