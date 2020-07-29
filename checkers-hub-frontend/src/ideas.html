@@ -1,0 +1,20 @@
+piece has 2 empty squares in front 
+move piece only if there is no piece on black squares next to this piece
+
+piece has 1 or more same color pieces in front 
+can't move piece in direction of same color piece
+
+piece has 1 or more opposite color pieces in front
+pass to jump handler
+
+
+
+if <td> doesnt have a div allow player to move piece
+//only allow to move one square at a time
+
+
+jump handler (recursive?)
+check emptiness of square beyond opposite-color piece
+if legal jump, check if more opposite-color pieces in front (of target square)
+if so call jump handler again (on target square)
+else push coordinates to gameObject.legalMoves

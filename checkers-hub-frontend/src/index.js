@@ -22,6 +22,7 @@ const gameObject= {
 function startGame() {
 	placePieces();
 	gameObject.gameInProgress = true;
+	startListener();
 	body.classList.remove('body')
 	body.classList.add('inGame')
 
@@ -55,7 +56,7 @@ function generateBoard() {
 	
 	//activate start button once the board exists
 	startButton.addEventListener('click', e => {
-		if(startButton.className === 'on') {
+		if(!gameObject.gameInProgress) {
 			startGame();
 		}
 	})
@@ -112,6 +113,7 @@ function startListener(){
 		if(e.target.classList.contains('piece') && 
 			e.target.classList.contains(gameObject.whoseTurn)){
 			gameObject.selectedPiece = e.target.dataset['id'];
+			console.log(squaresInFront())
 			displayLegalMoves(gameObject.pieceLocations[gameObject.selectedPiece]);
 		}
 		else{ 
@@ -173,9 +175,18 @@ function renderUpdate(){
 	console.log(gameObject);
 }
 
+function squaresInFront() {
+	let {whoseTurn, boardArray, selectedPiece, pieceLocations, legalMoves} = gameObject
+	
+	if(whoseTurn === 'black'){
+		if(pieceLocations[selectedPiece][1] == 0) {
+            return [[parseInt(pieceLocations[selectedPiece][0]) - 1, parseInt(pieceLocations[selectedPiece][1]) + 1]]
+		}
+	}
+}
 
 generateBoard();
-startListener();
+
 const squares = Array.from(document.querySelectorAll('td'))
 const blackSquares = Array.from(document.querySelectorAll('.square.black'))
 
