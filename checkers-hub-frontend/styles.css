@@ -2,9 +2,12 @@
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:900i&display=swap');
 
-#scoreBoard{
-	font-size: 80px;
-	color: grey;
+.scoreBoard{
+	font-size: 30px;
+	color: whitesmoke;
+	/* display: flex; */
+	justify-content: center;
+	align-items: center;
 }
 .square.black {
 	background-color: gray;
