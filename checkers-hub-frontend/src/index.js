@@ -36,7 +36,7 @@ twoPlayerButton.addEventListener('click', e => {
 })
 
 onePlayerButton.addEventListener('click', e => {
-	if(!gameObject.gameInProgress){
+	if (!gameObject.gameInProgress) {
 		startOnePlayerGame();
 	}
 })
@@ -60,7 +60,7 @@ function startGame() {
 	body.classList.add('inGame')
 }
 
-function startOnePlayerGame(){
+function startOnePlayerGame() {
 	startGame();
 
 }
@@ -157,7 +157,7 @@ function board(i, j) {
 
 function startListener() {
 	//start listening for click events on the board
-	boardDiv.addEventListener('click', (e) => {
+	document.addEventListener('click', (e) => {
 		//first branch: a piece is clicked of the color whose turn 
 		//it is. track this piece in gameObject and call getLegalMoves
 		if (e.target.classList.contains('piece') &&
@@ -166,11 +166,16 @@ function startListener() {
 			clearPossibilities();
 			displayLegalMoves(gameObject.pieceLocations[gameObject.selectedPiece]);
 		}
-		else if (gameObject.selectedPiece &&
-			gameObject.legalMoves.find(array => equalArrays(array, getCoordinates(e.target)))) {
-			movePiece(getCoordinates(e.target));
-			clearPossibilities();
-			gameObject.legalMoves = [];
+		else if (gameObject.selectedPiece) {
+			if (gameObject.legalMoves.find(array => equalArrays(array, getCoordinates(e.target)))) {
+				movePiece(getCoordinates(e.target));
+				clearPossibilities();
+				gameObject.legalMoves = [];
+			}
+			else {
+				clearPossibilities();
+				clearSelected();
+			}
 		}
 	})
 }
@@ -206,8 +211,11 @@ function clearPossibilities() {
 	}
 }
 
+function clearSelected(){
+	gameObject.selectedPiece = null;
+}
+
 function clearPossibility(coordArray) {
-	console.log(coordArray + ' ' + board(...coordArray));
 	board(...coordArray).dataset.legal = 'false';
 }
 
@@ -241,7 +249,7 @@ function getLegalMoves(coordArray, beforeJump) {
 	//	}
 }
 
-function onBoard(coordArray){
+function onBoard(coordArray) {
 	return (coordArray[0] >= 0 && coordArray[1] <= 7 && coordArray[1] >= 0 && coordArray[1] <= 7);
 }
 
@@ -333,7 +341,7 @@ function squaresInFront(coordArray) {
 	let { whoseTurn, pieceLocations } = gameObject
 
 	if (whoseTurn === 'black') {
-		if(coordArray[0] == 0){
+		if (coordArray[0] == 0) {
 			return [];
 		}
 		else if (coordArray[1] == 0) {
@@ -348,7 +356,7 @@ function squaresInFront(coordArray) {
 		}
 	}
 	else {
-		if(coordArray[0] == 7){
+		if (coordArray[0] == 7) {
 			return [];
 		}
 		else if (coordArray[1] == 0) {
