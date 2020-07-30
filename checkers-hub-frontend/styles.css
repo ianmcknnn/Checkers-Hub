@@ -32,6 +32,10 @@
 	text-align: center;
 }
 
+.square[data-legal=true] {
+	background-color: gold;
+}
+
 .piece.red {
 	background-color: red;
 	width: 50px;

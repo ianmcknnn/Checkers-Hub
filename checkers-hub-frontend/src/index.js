@@ -107,17 +107,19 @@ function startListener() {
 		if (e.target.classList.contains('piece') &&
 			e.target.classList.contains(gameObject.whoseTurn)) {
 			gameObject.selectedPiece = e.target.dataset['id'];
-			getLegalMoves(gameObject.pieceLocations[gameObject.selectedPiece], true);
+			clearPossibilities();
+			displayLegalMoves(gameObject.pieceLocations[gameObject.selectedPiece]);
 		}
 		else if (gameObject.selectedPiece &&
-				gameObject.legalMoves.find(array => equalArrays(array, getCoordinates(e.target)))) {
+			gameObject.legalMoves.find(array => equalArrays(array, getCoordinates(e.target)))) {
 			movePiece(getCoordinates(e.target))
+			clearPossibilities();
 			gameObject.legalMoves = [];
 		}
 	})
 }
 
-function equalArrays(array1, array2){
+function equalArrays(array1, array2) {
 	return JSON.stringify(array1) == JSON.stringify(array2);
 }
 
@@ -128,54 +130,76 @@ function getCoordinates(squareDiv) {
 
 function displayLegalMoves(coordArray) {
 	//display yellow circles on legal move spaces
+	if(gameObject.legalMoves){
+		gameObject.legalMoves = [];
+	}
+	getLegalMoves(coordArray, true);
+	for(let square of gameObject.legalMoves){
+		const boardSquare = board(...square);
+		displayPossibility(boardSquare);
+	}
+}
 
+function displayPossibility(boardSquare){
+	boardSquare.dataset.legal = 'true';
+}
+
+function clearPossibilities(){
+	for(let move of gameObject.legalMoves){
+		clearPossibility(move);
+	}
+}
+
+function clearPossibility(coordArray){
+	board(...coordArray).dataset.legal = 'false';
 }
 
 function getLegalMoves(coordArray, beforeJump) {
 	//determine which moves are legal from the selected coordinates
-	gameObject.legalMoves = [];
-	let { boardArray, legalMoves } = gameObject;
-	const squares = squaresInFront(coordArray);
-	for (let square of squares) {
-	
-		if (boardArray[square[0]][square[1]]) {
-			if (parseInt(boardArray[square[0]][square[1]]) % 2 != parseInt(boardArray[coordArray[0]][coordArray[1]]) % 2) {
-				jumpHandler(coordArray, square);
+	if (beforeJump) {
+		gameObject.legalMoves = [];
+		let { boardArray, legalMoves } = gameObject;
+		const squares = squaresInFront(coordArray);
+		for (let square of squares) {
+			console.log(square);
+			if (boardArray[square[0]][square[1]]) {
+				if (parseInt(boardArray[square[0]][square[1]]) % 2 != parseInt(boardArray[coordArray[0]][coordArray[1]]) % 2) {
+					jumpHandler(coordArray, square);
+				}
+			}
+			else {
+				legalMoves.push(square);
 			}
 		}
-		else if(beforeJump){
-			legalMoves.push(square);
-		}
 	}
-	console.log(gameObject.legalMoves);
 }
 
 function jumpHandler(coordArray, square) {
 	const next = nextInDiagonal(coordArray, square);
-	if(isEmpty(next)){
+	if (isEmpty(next)) {
 		gameObject.legalMoves.push(next);
 		getLegalMoves(next, false);
 	}
 }
 
-function nextInDiagonal(coordArray0, square0){
+function nextInDiagonal(coordArray0, square0) {
 	const coordArray = [parseInt(coordArray0[0]), parseInt(coordArray0[1])];
 	const square = [parseInt(square0[0]), parseInt(square0[1])];
 
-	if(coordArray[0] < square[0]){
-		if(coordArray[1] < square[1]){
-			return([(square[0] + 1).toString(), (square[1] + 1).toString()])
+	if (coordArray[0] < square[0]) {
+		if (coordArray[1] < square[1]) {
+			return ([(square[0] + 1).toString(), (square[1] + 1).toString()])
 		}
-		else if(coordArray[1] > square[1]){
-			return([(square[0] + 1).toString(), (square[1] - 1).toString()])
+		else if (coordArray[1] > square[1]) {
+			return ([(square[0] + 1).toString(), (square[1] - 1).toString()])
 		}
 	}
-	else if(coordArray[0] > square[0]){
-		if(coordArray[1] < square[1]){
-			return([(square[0] - 1).toString(), (square[1] + 1).toString()])
+	else if (coordArray[0] > square[0]) {
+		if (coordArray[1] < square[1]) {
+			return ([(square[0] - 1).toString(), (square[1] + 1).toString()])
 		}
-		else if(coordArray[1] > square[1]){
-			return([(square[0] - 1).toString(), (square[1] - 1).toString()])
+		else if (coordArray[1] > square[1]) {
+			return ([(square[0] - 1).toString(), (square[1] - 1).toString()])
 		}
 	}
 }
