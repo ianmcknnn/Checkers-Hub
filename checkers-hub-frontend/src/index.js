@@ -161,7 +161,6 @@ function getLegalMoves(coordArray, beforeJump) {
 		let { boardArray, legalMoves } = gameObject;
 		const squares = squaresInFront(coordArray);
 		for (let square of squares) {
-			console.log(square);
 			if (boardArray[square[0]][square[1]]) {
 				if (parseInt(boardArray[square[0]][square[1]]) % 2 != parseInt(boardArray[coordArray[0]][coordArray[1]]) % 2) {
 					jumpHandler(coordArray, square);
@@ -172,6 +171,21 @@ function getLegalMoves(coordArray, beforeJump) {
 			}
 		}
 	}
+//	else{
+//		let{boardArray} = gameObject;
+//		const squares = squaresInFront(coordArray);
+//		for(let square of squares){
+//			if(boardArray[square[0]][square[1]]){
+//				if(parseInt(boardArray[square[0]][square[1]]) % 2 != parseInt(boardArray[coordArray[0]][coordArray[1]]) % 2) {
+//					jumpHandler(coordArray, square);
+//				}
+//			}
+//		}
+//	}
+}
+
+function checkForJumps(coordArray){
+
 }
 
 function jumpHandler(coordArray, square) {
