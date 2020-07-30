@@ -17,7 +17,8 @@ const gameObject = {
 	gameInProgress: false,
 	legalMoves: [],
 	updatedSquares: [],
-	moves: []
+	moves: [],
+	captures: []
 };
 
 function startGame() {
@@ -112,7 +113,7 @@ function startListener() {
 		}
 		else if (gameObject.selectedPiece &&
 			gameObject.legalMoves.find(array => equalArrays(array, getCoordinates(e.target)))) {
-			movePiece(getCoordinates(e.target))
+			movePiece(getCoordinates(e.target));
 			clearPossibilities();
 			gameObject.legalMoves = [];
 		}
@@ -192,6 +193,7 @@ function jumpHandler(coordArray, square) {
 	const next = nextInDiagonal(coordArray, square);
 	if (isEmpty(next)) {
 		gameObject.legalMoves.push(next);
+		gameObject.captures.push([next, square]);
 		getLegalMoves(next, false);
 	}
 }
@@ -249,12 +251,19 @@ function renderUpdate() {
 	else {
 		gameObject.whoseTurn = 'black';
 	}
+	let toBeRemoved = gameObject.captures.find(pair => equalArrays(pair[0], to));
+	if(toBeRemoved){
+		removePiece(toBeRemoved[1]);
+	}
+	gameObject.captures = [];
 	gameObject.moves.push([from, to])
 	gameObject.selectedPiece = null;
 	gameObject.updatedSquares = [];
 }
 
 function squaresInFront(coordArray) {
+	//returns array of coordinate arrays of the squares
+	//diagonally adjacent to coordArray in front
 	let { whoseTurn, pieceLocations } = gameObject
 
 	if (whoseTurn === 'black') {
