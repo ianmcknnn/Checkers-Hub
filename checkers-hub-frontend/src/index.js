@@ -4,9 +4,9 @@ const backButton = document.getElementById('back');
 const twoPlayerButton = document.getElementById('2player');
 const onePlayerButton = document.getElementById('1player');
 const body = document.querySelector(".body")
-const blackScore = document.querySelector("#blackScore")
-const redScore = document.querySelector("#redScore")
 const scoreBoard = document.querySelector('.scoreBoard');
+let blackScore = document.querySelector("#blackScore")
+let redScore = document.querySelector("#redScore")
 
 let gameObject = {
 	whoseTurn: 'black',
@@ -207,6 +207,7 @@ function clearPossibilities() {
 }
 
 function clearPossibility(coordArray) {
+	console.log(coordArray + ' ' + board(...coordArray));
 	board(...coordArray).dataset.legal = 'false';
 }
 
@@ -240,13 +241,13 @@ function getLegalMoves(coordArray, beforeJump) {
 	//	}
 }
 
-function checkForJumps(coordArray) {
-
+function onBoard(coordArray){
+	return (coordArray[0] >= 0 && coordArray[1] <= 7 && coordArray[1] >= 0 && coordArray[1] <= 7);
 }
 
 function jumpHandler(coordArray, square) {
 	const next = nextInDiagonal(coordArray, square);
-	if (isEmpty(next)) {
+	if (onBoard(next) && isEmpty(next)) {
 		gameObject.legalMoves.push(next);
 		gameObject.captures.push([next, square]);
 		getLegalMoves(next, false);
@@ -310,7 +311,12 @@ function renderUpdate() {
 	if (toBeRemoved) {
 		removePiece(toBeRemoved[1]);
 		if (whoseTurn === 'black') {
-			redScore = parseInt(redScore) - 1
+			gameObject.score['red'] -= 1;
+			redScore.innerText = gameObject.score['red'];
+		}
+		else {
+			gameObject.score['black'] -= 1;
+			blackScore.innerText = gameObject.score['black'];
 		}
 
 	}
@@ -318,6 +324,7 @@ function renderUpdate() {
 	gameObject.moves.push([from, to])
 	gameObject.selectedPiece = null;
 	gameObject.updatedSquares = [];
+
 }
 
 function squaresInFront(coordArray) {
@@ -326,7 +333,10 @@ function squaresInFront(coordArray) {
 	let { whoseTurn, pieceLocations } = gameObject
 
 	if (whoseTurn === 'black') {
-		if (coordArray[1] == 0) {
+		if(coordArray[0] == 0){
+			return [];
+		}
+		else if (coordArray[1] == 0) {
 			return [[(parseInt(coordArray[0]) - 1).toString(), (parseInt(coordArray[1]) + 1).toString()]];
 		}
 		else if (coordArray[1] == 7) {
@@ -338,7 +348,10 @@ function squaresInFront(coordArray) {
 		}
 	}
 	else {
-		if (coordArray[1] == 0) {
+		if(coordArray[0] == 7){
+			return [];
+		}
+		else if (coordArray[1] == 0) {
 			return [[(parseInt(coordArray[0]) + 1).toString(), (parseInt(coordArray[1]) + 1).toString()]];
 		}
 		else if (coordArray[1] == 7) {
