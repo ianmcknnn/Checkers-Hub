@@ -42,3 +42,4 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Bulma gem
 gem 'bulma', '~> 0.1.0'
+gem 'faker'
