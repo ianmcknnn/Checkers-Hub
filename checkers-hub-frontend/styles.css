@@ -2,12 +2,47 @@
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:900i&display=swap');
 
+.body {
+    background: linear-gradient(-45deg, #e04313, #6b052c, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+} 
+ .inGame{
+	background-color:#23a6d5;
+	background-size: 400% 400%;
+	}
+	
+
+
+
 .scoreBoard{
+	
 	font-size: 30px;
 	color: whitesmoke;
 	/* display: flex; */
 	justify-content: center;
 	align-items: center;
+	text-align: center;
+}
+
+#redScore{
+background-color: red;
+}
+
+#blackScore{
+	background-color: black;
 }
 .square.black {
 	background-color: gray;
@@ -51,6 +86,7 @@
 
 table {
 	margin: auto;
+	
 }
 
 #buttons {
@@ -59,28 +95,7 @@ table {
 	align-items: center;
 }
 
-.inGame{
-	background-color:#23a6d5;
-	background-size: 400% 400%;
-	}
 
-.body {
-    background: linear-gradient(-45deg, #e04313, #6b052c, #23a6d5, #23d5ab);
-    background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
-}
-
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
-}
 
 button {
 	min-width: 300px;
