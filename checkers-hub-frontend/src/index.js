@@ -16,7 +16,8 @@ const gameObject = {
 	pieceLocations: {},
 	gameInProgress: false,
 	legalMoves: [],
-	updatedSquares: []
+	updatedSquares: [],
+	moves: []
 };
 
 function startGame() {
@@ -136,7 +137,7 @@ function getLegalMoves(coordArray, beforeJump) {
 	let { boardArray, legalMoves } = gameObject;
 	const squares = squaresInFront(coordArray);
 	for (let square of squares) {
-		debugger
+	
 		if (boardArray[square[0]][square[1]]) {
 			if (parseInt(boardArray[square[0]][square[1]]) % 2 != parseInt(boardArray[coordArray[0]][coordArray[1]]) % 2) {
 				jumpHandler(coordArray, square);
@@ -210,6 +211,7 @@ function renderUpdate() {
 	else {
 		gameObject.whoseTurn = 'black';
 	}
+	gameObject.moves.push([from, to])
 	gameObject.selectedPiece = null;
 	gameObject.updatedSquares = [];
 }
