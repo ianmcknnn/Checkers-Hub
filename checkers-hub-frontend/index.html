@@ -1,26 +1,41 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<link rel='stylesheet' href='./styles.css'>
-		<script src='./src/index.js' defer></script>
-			<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"> -->
-		<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-        <meta name="HandheldFriendly" content="true">
-	</head>
-	<body class="body inGame">
-		<div class="sign">
-		<h1 class='title is-1'><span class="fast-flicker">C</span><span>h</span><span>e</span><span>c</span><span>kers</span>
-			 <span class="flicker">H</span><span>ub!</span></h1>
-	    </div>
-		<br>
-		<div id='board'>
-		</div>
-		<br>
-		<div id='startbutton'>
-		<button id="start">Start game</button>
-		</div>
 
-	</body>
+<head>
+	<link rel='stylesheet' href='./styles.css'>
+	<script src='./src/index.js' defer></script>
+	<!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css"> -->
+	<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="HandheldFriendly" content="true">
+</head>
+
+<body class="body inGame">
+	<div class="sign">
+		<h1 class='title is-1'><span
+				class="fast-flicker">C</span><span>h</span><span>e</span><span>c</span><span>kers</span>
+			<span class="flicker">H</span><span>ub!</span></h1>
+	</div>
+	<br>
+
+	<div class="scoreBoard" data-hidden='true'>
+		<h2> Score: </h2>
+		<h5> Red: <span id="redScore"> 12 </span></h5>
+		<h5> Black: <span id="blackScore"> 12 </span></h5>
+	</div>
+
+	<div id='board'>
+	</div>
+	<br>
+	<div id='buttons'>
+		<div id='startbuttons'>
+			<button id="2player" class='startbutton' >2-Player</button>
+			<br>
+			<button id="1player" class='startbutton' >1-Player</button>
+		</div>
+		<button id="back" class='backbutton' data-hidden='true'>Back</button>
+	</div>
+
+</body>
+
 </html>
-

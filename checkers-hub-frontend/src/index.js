@@ -1,8 +1,14 @@
 const boardDiv = document.getElementById('board');
-const startButton = document.getElementById('start');
-body = document.querySelector(".body")
+const startButtons = document.querySelector('#startbuttons');
+const backButton = document.getElementById('back');
+const twoPlayerButton = document.getElementById('2player');
+const onePlayerButton = document.getElementById('1player');
+const body = document.querySelector(".body")
+const blackScore = document.querySelector("#blackScore")
+const redScore = document.querySelector("#redScore")
+const scoreBoard = document.querySelector('.scoreBoard');
 
-const gameObject = {
+let gameObject = {
 	whoseTurn: 'black',
 	selectedPiece: null,
 	boardArray: [[null, null, null, null, null, null, null, null],
@@ -18,15 +24,44 @@ const gameObject = {
 	legalMoves: [],
 	updatedSquares: [],
 	moves: [],
-	captures: []
+	captures: [],
+	score: { red: 12, black: 12 },
+	onePlayer: 'false'
 };
 
+twoPlayerButton.addEventListener('click', e => {
+	if (!gameObject.gameInProgress) {
+		startGame();
+	}
+})
+
+onePlayerButton.addEventListener('click', e => {
+	if(!gameObject.gameInProgress){
+		startOnePlayerGame();
+	}
+})
+
+backButton.addEventListener('click', e => {
+	destroyGame();
+	backButton.dataset.hidden = 'true';
+	startButtons.dataset.hidden = 'false';
+	scoreBoard.dataset.hidden = 'true';
+})
+
 function startGame() {
+	startButtons.dataset.hidden = 'true';
+	backButton.dataset.hidden = 'false';
+	scoreBoard.dataset.hidden = 'false';
+	generateBoard();
 	placePieces();
 	gameObject.gameInProgress = true;
 	startListener();
 	body.classList.remove('body')
 	body.classList.add('inGame')
+}
+
+function startOnePlayerGame(){
+	startGame();
 
 }
 
@@ -34,6 +69,7 @@ function generateBoard() {
 	//creates and appends divs to the board, determining
 	//correct color with math magic
 	const boardTable = document.createElement('table');
+	boardTable.id = 'gameboard';
 
 	for (let i = 0; i < 8; i++) {
 		const newRow = document.createElement('tr')
@@ -57,11 +93,30 @@ function generateBoard() {
 	boardDiv.append(boardTable);
 
 	//activate start button once the board exists
-	startButton.addEventListener('click', e => {
-		if (!gameObject.gameInProgress) {
-			startGame();
-		}
-	})
+
+}
+
+function destroyGame() {
+	document.getElementById('gameboard').remove();
+	gameObject = {
+		whoseTurn: 'black',
+		selectedPiece: null,
+		boardArray: [[null, null, null, null, null, null, null, null],
+		[null, null, null, null, null, null, null, null],
+		[null, null, null, null, null, null, null, null],
+		[null, null, null, null, null, null, null, null],
+		[null, null, null, null, null, null, null, null],
+		[null, null, null, null, null, null, null, null],
+		[null, null, null, null, null, null, null, null],
+		[null, null, null, null, null, null, null, null]],
+		pieceLocations: {},
+		gameInProgress: false,
+		legalMoves: [],
+		updatedSquares: [],
+		moves: [],
+		captures: [],
+		score: { red: 12, black: 12 }
+	}
 }
 
 function placePieces() {
@@ -131,27 +186,27 @@ function getCoordinates(squareDiv) {
 
 function displayLegalMoves(coordArray) {
 	//display yellow circles on legal move spaces
-	if(gameObject.legalMoves){
+	if (gameObject.legalMoves) {
 		gameObject.legalMoves = [];
 	}
 	getLegalMoves(coordArray, true);
-	for(let square of gameObject.legalMoves){
+	for (let square of gameObject.legalMoves) {
 		const boardSquare = board(...square);
 		displayPossibility(boardSquare);
 	}
 }
 
-function displayPossibility(boardSquare){
+function displayPossibility(boardSquare) {
 	boardSquare.dataset.legal = 'true';
 }
 
-function clearPossibilities(){
-	for(let move of gameObject.legalMoves){
+function clearPossibilities() {
+	for (let move of gameObject.legalMoves) {
 		clearPossibility(move);
 	}
 }
 
-function clearPossibility(coordArray){
+function clearPossibility(coordArray) {
 	board(...coordArray).dataset.legal = 'false';
 }
 
@@ -172,20 +227,20 @@ function getLegalMoves(coordArray, beforeJump) {
 			}
 		}
 	}
-//	else{
-//		let{boardArray} = gameObject;
-//		const squares = squaresInFront(coordArray);
-//		for(let square of squares){
-//			if(boardArray[square[0]][square[1]]){
-//				if(parseInt(boardArray[square[0]][square[1]]) % 2 != parseInt(boardArray[coordArray[0]][coordArray[1]]) % 2) {
-//					jumpHandler(coordArray, square);
-//				}
-//			}
-//		}
-//	}
+	//	else{
+	//		let{boardArray} = gameObject;
+	//		const squares = squaresInFront(coordArray);
+	//		for(let square of squares){
+	//			if(boardArray[square[0]][square[1]]){
+	//				if(parseInt(boardArray[square[0]][square[1]]) % 2 != parseInt(boardArray[coordArray[0]][coordArray[1]]) % 2) {
+	//					jumpHandler(coordArray, square);
+	//				}
+	//			}
+	//		}
+	//	}
 }
 
-function checkForJumps(coordArray){
+function checkForJumps(coordArray) {
 
 }
 
@@ -252,8 +307,12 @@ function renderUpdate() {
 		gameObject.whoseTurn = 'black';
 	}
 	let toBeRemoved = gameObject.captures.find(pair => equalArrays(pair[0], to));
-	if(toBeRemoved){
+	if (toBeRemoved) {
 		removePiece(toBeRemoved[1]);
+		if (whoseTurn === 'black') {
+			redScore = parseInt(redScore) - 1
+		}
+
 	}
 	gameObject.captures = [];
 	gameObject.moves.push([from, to])
@@ -293,7 +352,6 @@ function squaresInFront(coordArray) {
 
 }
 
-generateBoard();
 
 const squares = Array.from(document.querySelectorAll('td'))
 const blackSquares = Array.from(document.querySelectorAll('.square.black'))

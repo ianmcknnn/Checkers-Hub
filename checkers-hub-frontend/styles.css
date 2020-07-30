@@ -1,23 +1,13 @@
-/* @font-face {
-	font-family: Clip;
-	src: url("https://acupoftee.github.io/fonts/Clip.ttf");
-  } */
 
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat:900i&display=swap');
 
-/* h1{
-	font-family: 'Montserrat', sans-serif;
-	text-align: center;
-	font-size: 60px;
-	-webkit-text-fill-color: transparent;
-  -webkit-text-stroke-width: 3px;
-  -webkit-text-stroke-color: white;
-  text-shadow: 
-						8px 8px rgb(12, 142, 194),
-						20px 20px #000000;
-	
-} */
+#scoreBoard{
+	font-size: 80px;
+	color: grey;
+	float: left;
+	width: 30%;
+}
 .square.black {
 	background-color: gray;
 }
@@ -59,7 +49,16 @@
 }
 
 table {
+	float: right;
+	width: 70%;
+	
 	margin: auto;
+}
+
+#buttons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .inGame{
@@ -146,6 +145,10 @@ button {
   button:hover::after, button:focus::after {
 	animation: none;
 	display: none;
+  }
+
+  [data-hidden='true'] {
+	  display: none;
   }
   
   @keyframes ring {
