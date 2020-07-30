@@ -4,9 +4,9 @@ const backButton = document.getElementById('back');
 const twoPlayerButton = document.getElementById('2player');
 const onePlayerButton = document.getElementById('1player');
 const body = document.querySelector(".body")
-const blackScore = document.querySelector("#blackScore")
-const redScore = document.querySelector("#redScore")
 const scoreBoard = document.querySelector('.scoreBoard');
+let blackScore = document.querySelector("#blackScore")
+let redScore = document.querySelector("#redScore")
 
 let gameObject = {
 	whoseTurn: 'black',
@@ -36,7 +36,7 @@ twoPlayerButton.addEventListener('click', e => {
 })
 
 onePlayerButton.addEventListener('click', e => {
-	if(!gameObject.gameInProgress){
+	if (!gameObject.gameInProgress) {
 		startOnePlayerGame();
 	}
 })
@@ -60,7 +60,7 @@ function startGame() {
 	body.classList.add('inGame')
 }
 
-function startOnePlayerGame(){
+function startOnePlayerGame() {
 	startGame();
 
 }
@@ -157,7 +157,7 @@ function board(i, j) {
 
 function startListener() {
 	//start listening for click events on the board
-	boardDiv.addEventListener('click', (e) => {
+	document.addEventListener('click', (e) => {
 		//first branch: a piece is clicked of the color whose turn 
 		//it is. track this piece in gameObject and call getLegalMoves
 		if (e.target.classList.contains('piece') &&
@@ -166,11 +166,16 @@ function startListener() {
 			clearPossibilities();
 			displayLegalMoves(gameObject.pieceLocations[gameObject.selectedPiece]);
 		}
-		else if (gameObject.selectedPiece &&
-			gameObject.legalMoves.find(array => equalArrays(array, getCoordinates(e.target)))) {
-			movePiece(getCoordinates(e.target));
-			clearPossibilities();
-			gameObject.legalMoves = [];
+		else if (gameObject.selectedPiece) {
+			if (gameObject.legalMoves.find(array => equalArrays(array, getCoordinates(e.target)))) {
+				movePiece(getCoordinates(e.target));
+				clearPossibilities();
+				gameObject.legalMoves = [];
+			}
+			else {
+				clearPossibilities();
+				clearSelected();
+			}
 		}
 	})
 }
@@ -204,6 +209,10 @@ function clearPossibilities() {
 	for (let move of gameObject.legalMoves) {
 		clearPossibility(move);
 	}
+}
+
+function clearSelected(){
+	gameObject.selectedPiece = null;
 }
 
 function clearPossibility(coordArray) {
@@ -240,13 +249,13 @@ function getLegalMoves(coordArray, beforeJump) {
 	//	}
 }
 
-function checkForJumps(coordArray) {
-
+function onBoard(coordArray) {
+	return (coordArray[0] >= 0 && coordArray[1] <= 7 && coordArray[1] >= 0 && coordArray[1] <= 7);
 }
 
 function jumpHandler(coordArray, square) {
 	const next = nextInDiagonal(coordArray, square);
-	if (isEmpty(next)) {
+	if (onBoard(next) && isEmpty(next)) {
 		gameObject.legalMoves.push(next);
 		gameObject.captures.push([next, square]);
 		getLegalMoves(next, false);
@@ -310,7 +319,12 @@ function renderUpdate() {
 	if (toBeRemoved) {
 		removePiece(toBeRemoved[1]);
 		if (whoseTurn === 'black') {
-			redScore = parseInt(redScore) - 1
+			gameObject.score['red'] -= 1;
+			redScore.innerText = gameObject.score['red'];
+		}
+		else {
+			gameObject.score['black'] -= 1;
+			blackScore.innerText = gameObject.score['black'];
 		}
 
 	}
@@ -318,6 +332,7 @@ function renderUpdate() {
 	gameObject.moves.push([from, to])
 	gameObject.selectedPiece = null;
 	gameObject.updatedSquares = [];
+
 }
 
 function squaresInFront(coordArray) {
@@ -326,7 +341,10 @@ function squaresInFront(coordArray) {
 	let { whoseTurn, pieceLocations } = gameObject
 
 	if (whoseTurn === 'black') {
-		if (coordArray[1] == 0) {
+		if (coordArray[0] == 0) {
+			return [];
+		}
+		else if (coordArray[1] == 0) {
 			return [[(parseInt(coordArray[0]) - 1).toString(), (parseInt(coordArray[1]) + 1).toString()]];
 		}
 		else if (coordArray[1] == 7) {
@@ -338,7 +356,10 @@ function squaresInFront(coordArray) {
 		}
 	}
 	else {
-		if (coordArray[1] == 0) {
+		if (coordArray[0] == 7) {
+			return [];
+		}
+		else if (coordArray[1] == 0) {
 			return [[(parseInt(coordArray[0]) + 1).toString(), (parseInt(coordArray[1]) + 1).toString()]];
 		}
 		else if (coordArray[1] == 7) {
