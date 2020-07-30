@@ -5,8 +5,6 @@
 #scoreBoard{
 	font-size: 80px;
 	color: grey;
-	float: left;
-	width: 30%;
 }
 .square.black {
 	background-color: gray;
@@ -49,9 +47,6 @@
 }
 
 table {
-	float: right;
-	width: 70%;
-	
 	margin: auto;
 }
 
