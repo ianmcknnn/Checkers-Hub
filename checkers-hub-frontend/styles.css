@@ -42,6 +42,15 @@
 	  font-family: sans-serif;
 	  border-radius: 20px;
 }	
+#logout{
+	padding: 10px;
+	  color: #313133;
+	  background-color: #4FD1C5;
+	  cursor: pointer;
+	  font-family: sans-serif;
+	  border-radius: 20px;
+}	
+
 	#main-holder {
 		
         margin-left: auto;
@@ -448,7 +457,7 @@ h1{
 	  padding: 8px 8px 8px 32px;
 	  text-decoration: none;
 	  font-size: 20px;
-	  color: white;
+	  color: black;
 	  display: block;
 	  transition: 0.3s;
   }
@@ -483,6 +492,6 @@ h1{
 	  
   } */
 
-  .slideout [data-state='signedin'] #loginButton{
+ /* .slideout [data-state='signedin'] #loginButton{
 	  display: none;
-  }
+  } */

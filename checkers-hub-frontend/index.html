@@ -14,7 +14,7 @@
 	<div id='userslideout' class='slideout' data-state='signedout'>
 		<a href='javascript:void(0)' class='closebutton' onclick='closeSlideout()'>&times;</a>
 		<p id='name'></p>
-		<img src='' alt='' width='80' height='130'>
+		<img src='' alt='' width='210' height='340' id='propic'>
 		<p id='location'></p>
 		<p id='bio'></p>
 		<p id='favoritegame'></p>
@@ -23,9 +23,11 @@
 		</ul>
 	-->	
 	</div>
-
+	<span onclick='renderForm()' id='login' data-hidden='false'>Login</span>
+	<span onclick='clearProfile()' id='logout' data-hidden='true'>Logout</span>
 	<span onclick='openSlideout()' id='openprofile' data-hidden='true'>Profile</span>
-	<span onclick='renderForm()' id='login'>Login</span>
+	
+	
 
 	<div id="main-form" data-hidden="true">
 		<main id="main-holder" >
