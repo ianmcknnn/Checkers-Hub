@@ -72,6 +72,14 @@ background-color: rgba(255,0,0,0.9);
 	
 }
 
+#redSpan{
+	background-color: red;
+}
+
+#blackSpan{
+	background-color: black;
+}
+
 .piece.black {
 	background-color: black;
 	width: 50px;
