@@ -26,12 +26,13 @@
   
 #main-form{
   
-  position: fixed;
   text-align: center;
-  bottom: 0;
-  right: 15px;
+  top: 0;
   border: 3px solid #f1f1f1;
   z-index: 9;
+  width: 50%;
+  background-color: white;
+  margin: auto;
 }
 	
 #login{
@@ -501,6 +502,14 @@ h1{
 	  right: 25px;
 	  font-size: 36px;
 	  margin-left: '50px';
+  }
+
+  #main-holder .closebutton {
+	  position: absolute;
+	  top: 0;
+	  right: 25px;
+	  font-size: 36px;
+	  margin-left: 50px;
   }
 
   #openprofile {

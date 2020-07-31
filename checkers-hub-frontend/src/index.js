@@ -16,16 +16,20 @@ const logIn = document.getElementById('login');
 const mainForm = document.getElementById('main-form');
 const profileButton = document.getElementById('openprofile');
 const logOut = document.getElementById('logout');
-const diegoProfile = {name: 'Diego',
-            location: 'Ashburn, VA',
-            bio: "Don't blame me, I voted for Kodos.",
-            favorite_game: 'Checkers',
-			image: 'https://i.imgur.com/4mpfo3V.jpg'};
-const ianProfile = {name: 'Ian', 
-            location: 'Baltimore, MD', 
-            bio: "All I want is what everyone wants: preferential treatment.",
-            favorite_game: 'Checkers',
-			image: 'https://i.imgur.com/CWfGjgG.jpg'};
+const diegoProfile = {
+	name: 'Diego',
+	location: 'Ashburn, VA',
+	bio: "Don't blame me, I voted for Kodos.",
+	favorite_game: 'Checkers',
+	image: 'https://i.imgur.com/4mpfo3V.jpg'
+};
+const ianProfile = {
+	name: 'Ian',
+	location: 'Baltimore, MD',
+	bio: "All I want is what everyone wants: preferential treatment.",
+	favorite_game: 'Checkers',
+	image: 'https://i.imgur.com/CWfGjgG.jpg'
+};
 const name = document.getElementById('name');
 const proPic = document.getElementById('propic')
 const bio = document.getElementById('bio');
@@ -64,35 +68,18 @@ let gameObject = {
 };
 
 loginButton.addEventListener("click", (e) => {
-    e.preventDefault();
-    const username = loginForm.username.value;
-    const password = loginForm.password.value;
+	e.preventDefault();
+	const username = loginForm.username.value;
+	const password = loginForm.password.value;
 
-    if (username === "Diego" && password === "flatiron" || username ==="Ian" && password === "flatiron") {
-        alert("You have successfully logged in.");
-//		location.reload();
+	if (username === "Diego" && password === "flatiron" || username === "Ian" && password === "flatiron") {
+		alert("You have successfully logged in.");
+		//		location.reload();
 		displayUser(username);
-		mainForm.dataset.hidden = 'true';
-		profileButton.dataset.hidden = 'false';
-		logIn.dataset.hidden = 'true';
-		logOut.dataset.hidden = 'false';
-		if(username === 'Diego'){
-			name.textContent = 'Name: ' + diegoProfile.name;
-			proPic.setAttribute('src', diegoProfile.image);
-			userLocation.textContent = 'Location: ' + diegoProfile.location;
-			bio.textContent = 'About: ' + diegoProfile.bio;
-			faveGame.textContent = 'Favorite game: ' + diegoProfile.favorite_game;
-		}
-		else if(username === 'Ian'){
-			name.textContent = 'Name: ' + ianProfile.name;
-			proPic.setAttribute('src', ianProfile.image);
-			userLocation.textContent = 'Location: ' + ianProfile.location;
-			bio.textContent = 'About: ' + ianProfile.bio;
-			faveGame.textContent = 'Favorite game: ' + ianProfile.favorite_game;
-		}
-    } else {
-        loginErrorMsg.style.opacity = 1;
-    }
+
+	} else {
+		loginErrorMsg.style.opacity = 1;
+	}
 })
 
 twoPlayerButton.addEventListener('click', e => {
@@ -128,24 +115,46 @@ function clearProfile(){
     
 }
 
-function displayUser(username){
+function displayUser(username) {
+	mainForm.dataset.hidden = 'true';
+	profileButton.dataset.hidden = 'false';
+	logIn.dataset.hidden = 'true';
+	logOut.dataset.hidden = 'false';
+	if (username === 'Diego') {
+		name.textContent = 'Name: ' + diegoProfile.name;
+		proPic.setAttribute('src', diegoProfile.image);
+		userLocation.textContent = 'Location: ' + diegoProfile.location;
+		bio.textContent = 'About: ' + diegoProfile.bio;
+		faveGame.textContent = 'Favorite game: ' + diegoProfile.favorite_game;
+	}
+	else if (username === 'Ian') {
+		name.textContent = 'Name: ' + ianProfile.name;
+		proPic.setAttribute('src', ianProfile.image);
+		userLocation.textContent = 'Location: ' + ianProfile.location;
+		bio.textContent = 'About: ' + ianProfile.bio;
+		faveGame.textContent = 'Favorite game: ' + ianProfile.favorite_game;
+	}
 }
 
-function startGame() {
+function startGame(numPlayers) {
 	startButtons.dataset.hidden = 'true';
 	backButton.dataset.hidden = 'false';
 	scoreBoard.dataset.hidden = 'false';
 	generateBoard();
 	placePieces();
 	gameObject.gameInProgress = true;
-	startListener();
+	startListener(numPlayers);
 	body.classList.remove('body')
 	body.classList.add('inGame')
 }
 
 function startOnePlayerGame() {
-	startGame();
+	startGame(1);
 
+}
+
+function generateMove() {
+	return gameObject.legalMoves[Math.floor(Math.random() * gameObject.legalMoves.length)];
 }
 
 function generateBoard() {
@@ -238,11 +247,14 @@ function board(i, j) {
 	return document.querySelector(`[data-row='${i}'] [data-column='${j}']`);
 }
 
-function startListener() {
+function startListener(numPlayers) {
 	//start listening for click events on the board
 	document.addEventListener('click', (e) => {
 		//first branch: a piece is clicked of the color whose turn 
 		//it is. track this piece in gameObject and call getLegalMoves
+		if(numPlayers == 1){
+
+		}
 		if (e.target.classList.contains('piece') &&
 			e.target.classList.contains(gameObject.whoseTurn)) {
 			gameObject.selectedPiece = e.target.dataset['id'];
@@ -294,7 +306,7 @@ function clearPossibilities() {
 	}
 }
 
-function clearSelected(){
+function clearSelected() {
 	gameObject.selectedPiece = null;
 }
 
@@ -456,11 +468,11 @@ function squaresInFront(coordArray) {
 
 }
 
-function openSlideout(){
+function openSlideout() {
 	document.getElementById('userslideout').style.width = '250px';
 }
 
-function closeSlideout(){
+function closeSlideout() {
 	document.getElementById('userslideout').style.width = '0px';
 }
 
