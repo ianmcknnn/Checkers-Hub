@@ -373,6 +373,14 @@ function squaresInFront(coordArray) {
 
 }
 
+function openSlideout(){
+	document.getElementById('userslideout').style.width = '250px';
+}
+
+function closeSlideout(){
+	document.getElementById('userslideout').style.width = '0px';
+}
+
 
 const squares = Array.from(document.querySelectorAll('td'))
 const blackSquares = Array.from(document.querySelectorAll('.square.black'))

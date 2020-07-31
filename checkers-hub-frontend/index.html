@@ -11,9 +11,21 @@
 </head>
 
 <body class="body inGame">
-<div class="space stars1"></div>
-<div class="space stars2"></div>
-<div class="space stars3"></div>
+	<div id='userslideout' class='slideout' data-state='signedout'>
+		<a href='javascript:void(0)' class='closebutton' onclick='closeSlideout()'>&times;</a>
+		<p id='name'></p>
+		<img src='' alt='' width='80' height='130'>
+		<p id='location'></p>
+		<p id='bio'></p>
+		<p id='favoritegame'></p>
+	</div>
+
+	<span onclick='openSlideout()' id='openprofile'>Profile</span>
+
+	<div class="space stars1"></div>
+	<div class="space stars2"></div>
+	<div class="space stars3"></div>
+
 
 	<div class="sign">
 		<h1 class='title is-1'><span
@@ -23,8 +35,8 @@
 	<br>
 
 	<div class="scoreBoard" data-hidden='true'>
-		<h3>Score: <span id='redSpan'>Red: <span id="redScore"> 12 </span> </span> 
-		 <span id='blackSpan'>Black: <span id="blackScore"> 12 </span> </h3> </span>
+		<h3>Score: <span id='redSpan'>Red: <span id="redScore"> 12 </span> </span>
+			<span id='blackSpan'>Black: <span id="blackScore"> 12 </span> </h3> </span>
 	</div>
 
 	<div id='board'>
@@ -32,11 +44,11 @@
 	<br>
 	<div id='buttons'>
 		<div id='startbuttons'>
-			<button id="2player" class='startbutton' >2-Player</button>
+			<button id="2player" class='startbutton'>2-Player</button>
 			<br>
 			<br>
 			<br>
-			<button id="1player" class='startbutton' >1-Player</button>
+			<button id="1player" class='startbutton'>1-Player</button>
 		</div>
 		<br>
 		<br>

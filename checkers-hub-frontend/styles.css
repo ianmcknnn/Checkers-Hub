@@ -340,4 +340,50 @@ h1{
 	  opacity: 1;
 	}
   }
+
+  .slideout {
+	  height: 100%;
+	  width: 0;
+	  position: fixed;
+	  z-index: 1;
+	  top: 0;
+	  left: 0;
+	  background-color: white;
+	  overflow-x: hidden;
+	  padding-top: 70px;
+	  transition: 0.5s;
+  }
+
+  .slideout p {
+	  padding: 8px 8px 8px 32px;
+	  text-decoration: none;
+	  font-size: 20px;
+	  color: white;
+	  display: block;
+	  transition: 0.3s;
+  }
+
+  .slideout a:hover {
+	  color: gray;
+  }
+
+  .slideout .closebutton {
+	  position: absolute;
+	  top: 0;
+	  right: 25px;
+	  font-size: 36px;
+	  margin-left 50px;
+  }
+
+  @media screen and (max-height: 450px){
+	  .slideout {padding-top: 15px;}
+	  .slideout {font-size: 18px;}
+  }
   
+  .slideout [data-state='signedout'] #loginButton{
+	  
+  }
+
+  .slideout [data-state='signedin'] #loginButton{
+	  display: none;
+  }
