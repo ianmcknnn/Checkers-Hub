@@ -101,8 +101,18 @@ backButton.addEventListener('click', e => {
 	scoreBoard.dataset.hidden = 'true';
 })
 
-function clearProfile() {
 
+function clearProfile(){
+	        name.textContent = '';
+			proPic.setAttribute('src', '');
+			userLocation.textContent = '';
+			bio.textContent = '';
+			faveGame.textContent = '';
+			mainForm.dataset.hidden = 'true';
+		profileButton.dataset.hidden = 'true';
+		logIn.dataset.hidden = 'false';
+		logOut.dataset.hidden = 'true';
+    
 }
 
 function closeForm(){
