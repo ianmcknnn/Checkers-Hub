@@ -115,6 +115,10 @@ function clearProfile(){
     
 }
 
+function closeForm(){
+	mainForm.dataset.hidden = 'true';
+}
+
 function displayUser(username) {
 	mainForm.dataset.hidden = 'true';
 	profileButton.dataset.hidden = 'false';
