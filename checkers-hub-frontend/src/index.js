@@ -7,6 +7,10 @@ const body = document.querySelector(".body")
 const scoreBoard = document.querySelector('.scoreBoard');
 let blackScore = document.querySelector("#blackScore")
 let redScore = document.querySelector("#redScore")
+const loginForm = document.getElementById("login-form");
+const loginButton = document.getElementById("login-form-submit");
+const loginErrorMsg = document.getElementById("login-error-msg");
+const mainHolder = document.getElementById("main-holder")
 
 let gameObject = {
 	whoseTurn: 'black',
@@ -28,6 +32,19 @@ let gameObject = {
 	score: { red: 12, black: 12 },
 	onePlayer: 'false'
 };
+
+loginButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    const username = loginForm.username.value;
+    const password = loginForm.password.value;
+
+    if (username === "Diego" && password === "flatiron" || username ==="Ian" && password === "flatiron") {
+        alert("You have successfully logged in.");
+        location.reload();
+    } else {
+        loginErrorMsg.style.opacity = 1;
+    }
+})
 
 twoPlayerButton.addEventListener('click', e => {
 	if (!gameObject.gameInProgress) {
