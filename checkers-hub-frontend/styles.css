@@ -52,6 +52,33 @@
 	  border-radius: 20px;
 }	
 
+#name{
+	background-color: white;
+	text-align: center;
+}
+#location{
+	background-color: white;
+}
+
+#propic{
+	text-align: center;
+	display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
+}
+#bio{
+	background-color: white;
+}
+
+#favoritegame{
+	background-color: white;
+}
+
+#userslideout {
+	background-color: darkblue;
+}
+
 	#main-holder {
 		
         margin-left: auto;
