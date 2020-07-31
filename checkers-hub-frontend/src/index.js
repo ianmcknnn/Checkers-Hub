@@ -21,7 +21,7 @@ const diegoProfile = {
 	location: 'Ashburn, VA',
 	bio: "Don't blame me, I voted for Kodos.",
 	favorite_game: 'Checkers',
-	image: 'https://i.imgur.com/4mpfo3V.jpg'
+	image: 'images/lucas.jpeg'
 };
 const ianProfile = {
 	name: 'Ian',
