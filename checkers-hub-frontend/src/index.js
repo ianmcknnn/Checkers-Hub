@@ -251,6 +251,8 @@ function board(i, j) {
 }
 
 function startListener() {
+	
+	document.querySelector('#blackSpan').style.border = '2px solid white';
 	//start listening for click events on the board
 	document.addEventListener('click', startListenerCallback)
 		//first branch: a piece is clicked of the color whose turn 
@@ -259,6 +261,7 @@ function startListener() {
 }
 
 function startListenerCallback() {
+	
 	if (event.target.classList.contains('piece') &&
 		event.target.classList.contains(gameObject.whoseTurn)) {
 		gameObject.selectedPiece = event.target.dataset['id'];
@@ -430,9 +433,13 @@ function renderUpdate() {
 	removePiece([from[0], from[1]], false);
 	if (whoseTurn === 'black') {
 		gameObject.whoseTurn = 'red';
+		document.querySelector('#redSpan').style.border = '2px solid white';
+		document.querySelector('#blackSpan').style.border = '';
 	}
 	else {
 		gameObject.whoseTurn = 'black';
+		document.querySelector('#blackSpan').style.border = '2px solid white';
+		document.querySelector('#redSpan').style.border = '';
 	}
 	let toBeRemoved = gameObject.captures.find(pair => equalArrays(pair[0], to));
 	if (toBeRemoved) {
