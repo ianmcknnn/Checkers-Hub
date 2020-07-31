@@ -375,6 +375,15 @@ h1{
 	  margin-left: '50px';
   }
 
+  #openprofile {
+	  padding: 10px;
+	  color: #313133;
+	  background-color: #4FD1C5;
+	  cursor: pointer;
+	  font-family: sans-serif;
+	  border-radius: 20px;
+  }
+
   @media screen and (max-height: 450px){
 	  .slideout {padding-top: 15px;}
 	  .slideout {font-size: 18px;}
