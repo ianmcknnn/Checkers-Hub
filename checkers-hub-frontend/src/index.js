@@ -11,9 +11,20 @@ let redScore = document.querySelector("#redScore")
 const loginForm = document.getElementById("login-form");
 const loginButton = document.getElementById("login-form-submit");
 const loginErrorMsg = document.getElementById("login-error-msg");
-const mainHolder = document.getElementById("main-holder")
-const logIn = document.getElementById('login')
-const mainForm = document.getElementById('main-form')
+const mainHolder = document.getElementById("main-holder");
+const logIn = document.getElementById('login');
+const mainForm = document.getElementById('main-form');
+const profileButton = document.getElementById('openprofile');
+const diegoProfile = {name: 'Diego',
+            location: 'Ashburn, VA',
+            bio: "Don't blame me, I voted for Kodos.",
+            favorite_game: 'Checkers',
+			image: 'https://i.imgur.com/4mpfo3V.jpg'};
+const ianProfile = {name: 'Ian', 
+            location: 'Baltimore, MD', 
+            bio: "All I want is what everyone wants: preferential treatment.",
+            favorite_game: 'Checkers',
+            image: 'https://i.imgur.com/CWfGjgG.jpg'};
 
 // logIn.addEventListener('click', e => {
 // 	mainHolder.dataset.hidden = 'false'
@@ -51,8 +62,13 @@ loginButton.addEventListener("click", (e) => {
 
     if (username === "Diego" && password === "flatiron" || username ==="Ian" && password === "flatiron") {
         alert("You have successfully logged in.");
-		location.reload();
+//		location.reload();
 		displayUser(username);
+		mainForm.dataset.hidden = 'true';
+		profileButton.dataset.hidden = 'false';
+		if(username === 'Diego'){
+			
+		}
     } else {
         loginErrorMsg.style.opacity = 1;
     }
