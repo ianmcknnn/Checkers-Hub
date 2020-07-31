@@ -15,9 +15,9 @@ const mainHolder = document.getElementById("main-holder")
 const logIn = document.getElementById('login')
 const mainForm = document.getElementById('main-form')
 
-// logIn.addEventListener('click', e => {
-// 	mainHolder.dataset.hidden = 'false'
-// })
+logIn.addEventListener('click', e => {
+	mainHolder.dataset.hidden = 'false'
+})
 
 function renderForm() {
 	mainForm.dataset.hidden = 'false'

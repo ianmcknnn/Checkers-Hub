@@ -23,6 +23,14 @@
 	background-color:#23a6d5;
 	background-size: 400% 400%;
 	}
+  
+#main-form{
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
 	
 #login{
 	padding: 10px;
@@ -95,7 +103,7 @@
         border-radius: 5px;
         color: white;
         font-weight: bold;
-        background-color: #3a3a3a;
+        background-color: darkblue;
         cursor: pointer;
         outline: none;
       }
