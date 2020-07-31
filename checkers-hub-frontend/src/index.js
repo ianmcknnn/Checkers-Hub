@@ -11,6 +11,16 @@ const loginForm = document.getElementById("login-form");
 const loginButton = document.getElementById("login-form-submit");
 const loginErrorMsg = document.getElementById("login-error-msg");
 const mainHolder = document.getElementById("main-holder")
+const logIn = document.getElementById('login')
+const mainForm = document.getElementById('main-form')
+
+// logIn.addEventListener('click', e => {
+// 	mainHolder.dataset.hidden = 'false'
+// })
+
+function renderForm() {
+	mainForm.dataset.hidden = 'false'
+}
 
 let gameObject = {
 	whoseTurn: 'black',
