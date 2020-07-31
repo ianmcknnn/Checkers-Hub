@@ -1,3 +1,4 @@
+const URL = 'localhost:3000/'
 const boardDiv = document.getElementById('board');
 const startButtons = document.querySelector('#startbuttons');
 const backButton = document.getElementById('back');
@@ -40,7 +41,8 @@ loginButton.addEventListener("click", (e) => {
 
     if (username === "Diego" && password === "flatiron" || username ==="Ian" && password === "flatiron") {
         alert("You have successfully logged in.");
-        location.reload();
+		location.reload();
+		displayUser(username);
     } else {
         loginErrorMsg.style.opacity = 1;
     }
@@ -64,6 +66,10 @@ backButton.addEventListener('click', e => {
 	startButtons.dataset.hidden = 'false';
 	scoreBoard.dataset.hidden = 'true';
 })
+
+function displayUser(username){
+	fetch(URL + '/user')
+}
 
 function startGame() {
 	startButtons.dataset.hidden = 'true';
