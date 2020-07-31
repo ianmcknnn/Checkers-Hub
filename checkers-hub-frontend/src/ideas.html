@@ -18,3 +18,19 @@ check emptiness of square beyond opposite-color piece
 if legal jump, check if more opposite-color pieces in front (of target square)
 if so call jump handler again (on target square)
 else push coordinates to gameObject.legalMoves
+
+
+To do:
+
+1. Connect to back end.
+    a. login button top left displays login form
+    b. new user button top left displays create form
+2. User page displays user info overlayed on normal startpage, with logout
+    and user edit buttons replacing login and create
+3. Save game to usergame database if user quits or navigates away
+    a. savegame form allows named games
+    b. otherwise saves with a timestamp
+4. Checkers rules-related things
+    a. kings
+    b. double jumps
+    c. end of game
