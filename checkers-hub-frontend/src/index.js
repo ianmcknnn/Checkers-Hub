@@ -144,12 +144,8 @@ function startGame(numPlayers) {
 
 function startOnePlayerGame() {
 	startGame(1);
-
 }
 
-function generateMove() {
-	return gameObject.legalMoves[Math.floor(Math.random() * gameObject.legalMoves.length)];
-}
 
 function generateBoard() {
 	//creates and appends divs to the board, determining
@@ -246,9 +242,6 @@ function startListener(numPlayers) {
 	document.addEventListener('click', (e) => {
 		//first branch: a piece is clicked of the color whose turn 
 		//it is. track this piece in gameObject and call getLegalMoves
-		if(numPlayers == 1){
-
-		}
 		if (e.target.classList.contains('piece') &&
 			e.target.classList.contains(gameObject.whoseTurn)) {
 			gameObject.selectedPiece = e.target.dataset['id'];
@@ -260,6 +253,9 @@ function startListener(numPlayers) {
 				movePiece(getCoordinates(e.target));
 				clearPossibilities();
 				gameObject.legalMoves = [];
+				if(numPlayers == 1){
+					generateMove();
+				}
 			}
 			else {
 				clearPossibilities();
@@ -267,6 +263,21 @@ function startListener(numPlayers) {
 			}
 		}
 	})
+}
+
+function generateMove() {
+	let moveArray = [];
+	for(let piece in gameObject.pieceLocations){
+		if(piece % 2 == 0){
+			getLegalMoves(gameObject.pieceLocations[piece.toString()], true);
+			gameObject.legalMoves.forEach(move => {
+				moveArray.push([piece.toString(), move]);
+			})
+		}
+	}
+	const randomMove = moveArray[Math.floor(Math.random() * moveArray.length)];
+	gameObject.selectedPiece = randomMove[0];
+	movePiece(randomMove[1]);
 }
 
 function equalArrays(array1, array2) {
@@ -385,8 +396,11 @@ function movePiece(coordArray) {
 }
 //select piece(div class piece black)
 
-function removePiece(coordArray) {
+function removePiece(coordArray, capture) {
 	board(...coordArray).childNodes[0].remove();
+	if(capture){
+		delete gameObject.pieceLocations[gameObject.boardArray[coordArray[0]][coordArray[1]]];
+	}
 	gameObject.boardArray[coordArray[0]][coordArray[1]] = null;
 }
 
@@ -397,7 +411,7 @@ function renderUpdate() {
 	let { updatedSquares, whoseTurn, selectedPiece } = gameObject;
 	let { to, from } = updatedSquares;
 	placePiece(to[0], to[1], whoseTurn, selectedPiece);
-	removePiece([from[0], from[1]]);
+	removePiece([from[0], from[1]], false);
 	if (whoseTurn === 'black') {
 		gameObject.whoseTurn = 'red';
 	}
@@ -406,7 +420,7 @@ function renderUpdate() {
 	}
 	let toBeRemoved = gameObject.captures.find(pair => equalArrays(pair[0], to));
 	if (toBeRemoved) {
-		removePiece(toBeRemoved[1]);
+		removePiece(toBeRemoved[1], true);
 		if (whoseTurn === 'black') {
 			gameObject.score['red'] -= 1;
 			redScore.innerText = gameObject.score['red'];
