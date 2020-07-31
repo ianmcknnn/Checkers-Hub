@@ -24,6 +24,14 @@
 	background-size: 400% 400%;
 	}
 	
+#login{
+	padding: 10px;
+	  color: #313133;
+	  background-color: #4FD1C5;
+	  cursor: pointer;
+	  font-family: sans-serif;
+	  border-radius: 20px;
+}	
 	#main-holder {
         width: 50%;
         height: 70%;
@@ -222,7 +230,7 @@ button {
 	opacity: 1;
   }
   
-  button::after {
+  .startbutton::after {
 	content: '';
 	width: 30px; height: 30px;
 	border-radius: 100%;
