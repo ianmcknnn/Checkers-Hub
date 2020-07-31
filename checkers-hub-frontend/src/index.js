@@ -15,6 +15,7 @@ const mainHolder = document.getElementById("main-holder");
 const logIn = document.getElementById('login');
 const mainForm = document.getElementById('main-form');
 const profileButton = document.getElementById('openprofile');
+const logOut = document.getElementById('logout');
 const diegoProfile = {name: 'Diego',
             location: 'Ashburn, VA',
             bio: "Don't blame me, I voted for Kodos.",
@@ -24,7 +25,13 @@ const ianProfile = {name: 'Ian',
             location: 'Baltimore, MD', 
             bio: "All I want is what everyone wants: preferential treatment.",
             favorite_game: 'Checkers',
-            image: 'https://i.imgur.com/CWfGjgG.jpg'};
+			image: 'https://i.imgur.com/CWfGjgG.jpg'};
+const name = document.getElementById('name');
+const proPic = document.getElementById('propic')
+const bio = document.getElementById('bio');
+const faveGame = document.getElementById('favoritegame');
+const userLocation = document.getElementById('location');
+const userSlideout = document.getElementById('userslideout');
 
 // logIn.addEventListener('click', e => {
 // 	mainHolder.dataset.hidden = 'false'
@@ -66,8 +73,21 @@ loginButton.addEventListener("click", (e) => {
 		displayUser(username);
 		mainForm.dataset.hidden = 'true';
 		profileButton.dataset.hidden = 'false';
+		logIn.dataset.hidden = 'true';
+		logOut.dataset.hidden = 'false';
 		if(username === 'Diego'){
-			
+			name.textContent = 'Name: ' + diegoProfile.name;
+			proPic.setAttribute('src', diegoProfile.image);
+			userLocation.textContent = 'Location: ' + diegoProfile.location;
+			bio.textContent = 'About: ' + diegoProfile.bio;
+			faveGame.textContent = 'Favorite game: ' + diegoProfile.favorite_game;
+		}
+		else if(username === 'Ian'){
+			name.textContent = 'Name: ' + ianProfile.name;
+			proPic.setAttribute('src', ianProfile.image);
+			userLocation.textContent = 'Location: ' + ianProfile.location;
+			bio.textContent = 'About: ' + ianProfile.bio;
+			faveGame.textContent = 'Favorite game: ' + ianProfile.favorite_game;
 		}
     } else {
         loginErrorMsg.style.opacity = 1;
@@ -93,8 +113,11 @@ backButton.addEventListener('click', e => {
 	scoreBoard.dataset.hidden = 'true';
 })
 
+function clearProfile(){
+
+}
+
 function displayUser(username){
-	fetch(URL + '/user')
 }
 
 function startGame() {
