@@ -64,7 +64,7 @@ let gameObject = {
 	moves: [],
 	captures: [],
 	score: { red: 12, black: 12 },
-	onePlayer: 'false'
+	numPlayers: 0
 };
 
 loginButton.addEventListener("click", (e) => {
@@ -84,7 +84,7 @@ loginButton.addEventListener("click", (e) => {
 
 twoPlayerButton.addEventListener('click', e => {
 	if (!gameObject.gameInProgress) {
-		startGame();
+		startGame(2);
 	}
 })
 
@@ -102,20 +102,20 @@ backButton.addEventListener('click', e => {
 })
 
 
-function clearProfile(){
-	        name.textContent = '';
-			proPic.setAttribute('src', '');
-			userLocation.textContent = '';
-			bio.textContent = '';
-			faveGame.textContent = '';
-			mainForm.dataset.hidden = 'true';
-		profileButton.dataset.hidden = 'true';
-		logIn.dataset.hidden = 'false';
-		logOut.dataset.hidden = 'true';
-    
+function clearProfile() {
+	name.textContent = '';
+	proPic.setAttribute('src', '');
+	userLocation.textContent = '';
+	bio.textContent = '';
+	faveGame.textContent = '';
+	mainForm.dataset.hidden = 'true';
+	profileButton.dataset.hidden = 'true';
+	logIn.dataset.hidden = 'false';
+	logOut.dataset.hidden = 'true';
+
 }
 
-function closeForm(){
+function closeForm() {
 	mainForm.dataset.hidden = 'true';
 }
 
@@ -147,7 +147,8 @@ function startGame(numPlayers) {
 	generateBoard();
 	placePieces();
 	gameObject.gameInProgress = true;
-	startListener(numPlayers);
+	gameObject.numPlayers = numPlayers;
+	startListener();
 	body.classList.remove('body')
 	body.classList.add('inGame')
 }
@@ -207,8 +208,10 @@ function destroyGame() {
 		updatedSquares: [],
 		moves: [],
 		captures: [],
-		score: { red: 12, black: 12 }
+		score: { red: 12, black: 12 },
+		numPlayers: 0
 	}
+	document.removeEventListener('click', startListenerCallback);
 }
 
 function placePieces() {
@@ -247,38 +250,41 @@ function board(i, j) {
 	return document.querySelector(`[data-row='${i}'] [data-column='${j}']`);
 }
 
-function startListener(numPlayers) {
+function startListener() {
 	//start listening for click events on the board
-	document.addEventListener('click', (e) => {
+	document.addEventListener('click', startListenerCallback)
 		//first branch: a piece is clicked of the color whose turn 
 		//it is. track this piece in gameObject and call getLegalMoves
-		if (e.target.classList.contains('piece') &&
-			e.target.classList.contains(gameObject.whoseTurn)) {
-			gameObject.selectedPiece = e.target.dataset['id'];
+		
+}
+
+function startListenerCallback() {
+	if (event.target.classList.contains('piece') &&
+		event.target.classList.contains(gameObject.whoseTurn)) {
+		gameObject.selectedPiece = event.target.dataset['id'];
+		clearPossibilities();
+		displayLegalMoves(gameObject.pieceLocations[gameObject.selectedPiece]);
+	}
+	else if (gameObject.selectedPiece) {
+		if (gameObject.legalMoves.find(array => equalArrays(array, getCoordinates(event.target)))) {
+			movePiece(getCoordinates(event.target));
 			clearPossibilities();
-			displayLegalMoves(gameObject.pieceLocations[gameObject.selectedPiece]);
-		}
-		else if (gameObject.selectedPiece) {
-			if (gameObject.legalMoves.find(array => equalArrays(array, getCoordinates(e.target)))) {
-				movePiece(getCoordinates(e.target));
-				clearPossibilities();
-				gameObject.legalMoves = [];
-				if(numPlayers == 1){
-					generateMove();
-				}
-			}
-			else {
-				clearPossibilities();
-				clearSelected();
+			gameObject.legalMoves = [];
+			if (gameObject.numPlayers == 1) {
+				generateMove();
 			}
 		}
-	})
+		else {
+			clearPossibilities();
+			clearSelected();
+		}
+	}
 }
 
 function generateMove() {
 	let moveArray = [];
-	for(let piece in gameObject.pieceLocations){
-		if(piece % 2 == 0){
+	for (let piece in gameObject.pieceLocations) {
+		if (piece % 2 == 0) {
 			getLegalMoves(gameObject.pieceLocations[piece.toString()], true);
 			gameObject.legalMoves.forEach(move => {
 				moveArray.push([piece.toString(), move]);
@@ -408,7 +414,7 @@ function movePiece(coordArray) {
 
 function removePiece(coordArray, capture) {
 	board(...coordArray).childNodes[0].remove();
-	if(capture){
+	if (capture) {
 		delete gameObject.pieceLocations[gameObject.boardArray[coordArray[0]][coordArray[1]]];
 	}
 	gameObject.boardArray[coordArray[0]][coordArray[1]] = null;
