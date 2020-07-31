@@ -130,21 +130,25 @@ function displayUser(username) {
 	}
 }
 
-function startGame() {
+function startGame(numPlayers) {
 	startButtons.dataset.hidden = 'true';
 	backButton.dataset.hidden = 'false';
 	scoreBoard.dataset.hidden = 'false';
 	generateBoard();
 	placePieces();
 	gameObject.gameInProgress = true;
-	startListener();
+	startListener(numPlayers);
 	body.classList.remove('body')
 	body.classList.add('inGame')
 }
 
 function startOnePlayerGame() {
-	startGame();
+	startGame(1);
 
+}
+
+function generateMove() {
+	return gameObject.legalMoves[Math.floor(Math.random() * gameObject.legalMoves.length)];
 }
 
 function generateBoard() {
@@ -237,11 +241,14 @@ function board(i, j) {
 	return document.querySelector(`[data-row='${i}'] [data-column='${j}']`);
 }
 
-function startListener() {
+function startListener(numPlayers) {
 	//start listening for click events on the board
 	document.addEventListener('click', (e) => {
 		//first branch: a piece is clicked of the color whose turn 
 		//it is. track this piece in gameObject and call getLegalMoves
+		if(numPlayers == 1){
+
+		}
 		if (e.target.classList.contains('piece') &&
 			e.target.classList.contains(gameObject.whoseTurn)) {
 			gameObject.selectedPiece = e.target.dataset['id'];

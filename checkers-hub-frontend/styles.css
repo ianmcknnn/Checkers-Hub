@@ -501,6 +501,7 @@ h1{
 	  font-size: 36px;
 	  margin-left: '50px';
   }
+
   #main-holder .closebutton {
 	  position: absolute;
 	  top: 0;
@@ -508,7 +509,6 @@ h1{
 	  font-size: 36px;
 	  margin-left: 50px;
   }
-
 
   #openprofile {
 	  padding: 10px;
